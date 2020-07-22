@@ -1,13 +1,15 @@
+server:
+  port: 8088
 spring:
   datasource:
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/bootdata?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/onespringboot?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=GMT%2B8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 #    initialization-mode: always
-#    schema:
-#      - classpath:user.sql
+    schema:
+      - classpath:sql/user.sql
     # 数据源其他配置
     initialSize: 5
     minIdle: 5
@@ -25,6 +27,11 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
 mybatis:
-  config-location: classpath:mybatis/mybaits-config.xml
+#  config-location: classpath:mybatis/mybaits-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true  # 开启驼峰命名模式
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
