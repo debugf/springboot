@@ -3,6 +3,7 @@ package com.springboot.onespringboot.service;
 import com.springboot.onespringboot.bean.Result;
 import com.springboot.onespringboot.bean.User;
 import com.springboot.onespringboot.mapper.UserMapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,10 +50,11 @@ public class UserService {
             }else {
                 result.setMsg("登录成功");
                 String token = tokenService.getToken(user);
-                System.out.println(token);
                 result.setSuccess(true);
-                user.setId(userc.getId());
-                result.setDetail(user);
+                JSONObject json = new JSONObject();
+                json.put("id", userc.getId());
+                json.put("token", token);
+                result.setDetail(json.toString());
             }
         }catch (Exception e){
             result.setMsg(e.getMessage());
