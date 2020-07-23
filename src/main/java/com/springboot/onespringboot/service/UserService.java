@@ -6,13 +6,15 @@ import com.springboot.onespringboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
 public class UserService {
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    TokenService tokenService;
 
     public Result regist(User user){
         Result result = new Result();
@@ -42,20 +44,25 @@ public class UserService {
         result.setDetail(null);
         try {
             User userc = userMapper.login(user);
-            System.out.println(userc.getCreatatime());
             if(userc == null){
                 result.setMsg("用户名或密码错误");
             }else {
                 result.setMsg("登录成功");
+                String token = tokenService.getToken(user);
+                System.out.println(token);
                 result.setSuccess(true);
                 user.setId(userc.getId());
-                result.setDetail(userc);
+                result.setDetail(user);
             }
         }catch (Exception e){
             result.setMsg(e.getMessage());
             e.printStackTrace();
         }
         return result;
+    }
+
+    public User findByUsername(String username){
+        return userMapper.findUserByName(username);
     }
 
 }

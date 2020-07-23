@@ -5,7 +5,7 @@
 <mapper namespace="com.springboot.onespringboot.mapper.UserMapper">
     <!--<select id="login" resultType="java.lang.Long" parameterType="com.springboot.onespringboot.bean.User">-->
     <select id="login" resultType="com.springboot.onespringboot.bean.User" parameterType="com.springboot.onespringboot.bean.User">
-        select * from user u where u.username=#{username} and password =#{password}
+        select u.id,u.username from user u where u.username=#{username} and password =#{password}
     </select>
     <insert id="regist" parameterType="com.springboot.onespringboot.bean.User">
         insert into user (username,password,email) values(#{username},#{password},#{email})
