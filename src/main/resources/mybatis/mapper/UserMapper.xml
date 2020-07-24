@@ -11,6 +11,6 @@
         insert into user (username,password,email) values(#{username},#{password},#{email})
     </insert>
     <select id="findUserByName" resultType="com.springboot.onespringboot.bean.User">
-        select u.username, u.password from user u where u.username=#{userName}
+        select u.username,u.password from user u where u.username=#{userName}
     </select>
 </mapper>

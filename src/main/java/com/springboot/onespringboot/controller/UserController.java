@@ -3,7 +3,6 @@ package com.springboot.onespringboot.controller;
 import com.springboot.onespringboot.annotation.UserLoginToken;
 import com.springboot.onespringboot.bean.Result;
 import com.springboot.onespringboot.bean.User;
-import com.springboot.onespringboot.service.TokenService;
 import com.springboot.onespringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +19,7 @@ public class UserController {
     @UserLoginToken
     @PostMapping(value = "/register")
     public Result regist(@RequestBody User user){
-        return userService.regist(user);
+            return userService.regist(user);
     }
 
     @PostMapping(value = "/login")

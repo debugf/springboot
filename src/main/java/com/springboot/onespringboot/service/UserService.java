@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 @Transactional(rollbackFor = RuntimeException.class)
 public class UserService {
@@ -32,7 +35,7 @@ public class UserService {
                 result.setSuccess(true);
                 result.setDetail(user);
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             result.setMsg(e.getMessage());
             e.printStackTrace();
         }
@@ -51,10 +54,10 @@ public class UserService {
                 result.setMsg("登录成功");
                 String token = tokenService.getToken(user);
                 result.setSuccess(true);
-                JSONObject json = new JSONObject();
-                json.put("id", userc.getId());
-                json.put("token", token);
-                result.setDetail(json.toString());
+                Map returnMap = new HashMap();
+                returnMap.put("id", userc.getId());
+                returnMap.put("token", token);
+                result.setDetail(returnMap);
             }
         }catch (Exception e){
             result.setMsg(e.getMessage());

@@ -8,7 +8,6 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.springboot.onespringboot.annotation.PassToken;
 import com.springboot.onespringboot.annotation.UserLoginToken;
 import com.springboot.onespringboot.bean.User;
-import com.springboot.onespringboot.mapper.UserMapper;
 import com.springboot.onespringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;

@@ -10,7 +10,7 @@ public class TokenService {
     public String getToken(User user){
         String token="";
         token= JWT.create().withAudience(user.getUsername())  // 将 username 保存到 token 里面
-                .sign(Algorithm.HMAC256(user.getPassword()));
+                .sign(Algorithm.HMAC256(user.getPassword())); // 解密方式为用户的密码
         return token;
     }
 }
