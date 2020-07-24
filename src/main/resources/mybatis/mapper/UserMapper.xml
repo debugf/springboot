@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.springboot.onespringboot.mapper.UserMapper">
-    <!--<select id="login" resultType="java.lang.Long" parameterType="com.springboot.onespringboot.bean.User">-->
     <select id="login" resultType="com.springboot.onespringboot.bean.User" parameterType="com.springboot.onespringboot.bean.User">
         select u.id,u.username from user u where username=#{username} and password =#{password}
     </select>
@@ -13,4 +12,17 @@
     <select id="findUserByName" resultType="com.springboot.onespringboot.bean.User">
         select u.username,u.password from user u where u.username=#{userName}
     </select>
+    <select id="findUserList" resultType="com.springboot.onespringboot.bean.User">
+        select * from user
+    </select>
+    <select id="getUser" resultType="com.springboot.onespringboot.bean.User" parameterType="int">
+        select * from user where id=${id}
+    </select>
+    <delete id="delUser" parameterType="int">
+        delete from user where id=${id}
+    </delete>
+    <update id="putUser">
+        UPDATE user SET password=#{user.password},email=#{user.email} WHERE id=#{id};
+    </update>
+
 </mapper>

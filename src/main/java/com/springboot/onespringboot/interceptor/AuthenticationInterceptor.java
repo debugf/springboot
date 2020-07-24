@@ -53,6 +53,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new RuntimeException("401");
                 }
                 User user = userService.findByUsername(userName);
+                System.out.println(user);
                 if(user == null) {
                     throw new RuntimeException("用户不存在请重新登录");
                 }
