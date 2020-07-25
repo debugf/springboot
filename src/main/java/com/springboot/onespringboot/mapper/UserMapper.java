@@ -16,7 +16,10 @@ public interface UserMapper {
 
     User login(User user);
 
-    List<User> findUserList();
+    List<User> findUserList(@Param("username") String username,
+                            @Param("email") String email,
+                            @Param("pageNumber") int pageNumber,
+                            @Param("pageSize") int pageSize);
 
     User getUser(int id);
 

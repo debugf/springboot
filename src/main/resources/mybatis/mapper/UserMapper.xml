@@ -6,6 +6,7 @@
     <select id="login" resultType="com.springboot.onespringboot.bean.User" parameterType="com.springboot.onespringboot.bean.User">
         select u.id,u.username from user u where username=#{username} and password =#{password}
     </select>
+
     <insert id="regist" parameterType="com.springboot.onespringboot.bean.User">
         insert into user (username,password,email) values(#{username},#{password},#{email})
     </insert>
@@ -14,6 +15,15 @@
     </select>
     <select id="findUserList" resultType="com.springboot.onespringboot.bean.User">
         select * from user
+        <where>
+            <if test="username!=null">
+                and username like "%"#{username}"%"
+            </if>
+            <if test="email!=null">
+                and email like "%"#{email}"%"
+            </if>
+        </where>
+        limit #{pageNumber},#{pageSize}
     </select>
     <select id="getUser" resultType="com.springboot.onespringboot.bean.User" parameterType="int">
         select * from user where id=${id}
@@ -21,8 +31,18 @@
     <delete id="delUser" parameterType="int">
         delete from user where id=${id}
     </delete>
+    <!-- set标签会自动判断哪个是最后一个字段，会自动去掉最后一个","号 -->
     <update id="putUser">
-        UPDATE user SET password=#{user.password},email=#{user.email} WHERE id=#{id};
+        update user
+        <set>
+            <if test="user.password!=null">
+                password = #{user.password},
+            </if>
+            <if test="user.email!=null">
+                email = #{user.email},
+            </if>
+        </set>
+        where id = #{id}
     </update>
 
 </mapper>

@@ -71,12 +71,13 @@ public class UserService {
         return userMapper.findUserByName(username);
     }
 
-    public Result userList(){
+    public Result userList(String username, String email, int startIndex, int pageSize){
         Result result = new Result();
         result.setSuccess(false);
         result.setDetail(null);
         try {
-            List<User> userList = userMapper.findUserList();
+            int pageNumber =(startIndex - 1) * pageSize;
+            List<User> userList = userMapper.findUserList(username,email,pageNumber,pageSize);
             result.setMsg("查询成功");
             result.setDetail(userList);
             result.setSuccess(true);
