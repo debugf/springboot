@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 用户表
  * </p>
  *
  * @author liuxiang

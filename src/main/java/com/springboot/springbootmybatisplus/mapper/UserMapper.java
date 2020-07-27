@@ -7,15 +7,13 @@ import java.util.List;
 
 /**
  * <p>
- *  Mapper 接口
+ * 用户 Mapper 接口
  * </p>
  *
  * @author liuxiang
  * @since 2020-07-26
  */
 public interface UserMapper extends BaseMapper<User> {
-
-    List<User> findAllUser();
 
     User findUserByName(String username);
 

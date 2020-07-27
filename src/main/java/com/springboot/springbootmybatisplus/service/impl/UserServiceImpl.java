@@ -15,7 +15,7 @@ import java.util.Map;
 
 /**
  * <p>
- *  服务实现类
+ * 用户 服务实现类
  * </p>
  *
  * @author liuxiang
@@ -29,12 +29,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private TokenServiceImpl tokenService;
-
-    @Override
-    public List<User> findAllUser(){
-
-        return userMapper.findAllUser();
-    }
 
     public Result regist(User user){
         Result result = new Result();
