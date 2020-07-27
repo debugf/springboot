@@ -18,9 +18,31 @@
         select u.id,u.username from user u where username=#{username} and password =#{password}
     </select>
 
-    <!-- 查找用户信息 -->
-    <select id="findAllUser" resultType="com.springboot.springbootmybatisplus.Bean.User">
-       select * from user
+    <!-- 动态SQL案例 -->
+    <select id="findUserList" resultType="com.springboot.springbootmybatisplus.Bean.User">
+        select * from user
+        <where>
+            <if test="username!=null">
+                and username like "%"#{username}"%"
+            </if>
+            <if test="email!=null">
+                and email like "%"#{email}"%"
+            </if>
+        </where>
+        limit #{pageNumber},#{pageSize}
     </select>
+    <!-- set标签会自动判断哪个是最后一个字段，会自动去掉最后一个","号 -->
+    <update id="putUser">
+        update user
+        <set>
+            <if test="user.password!=null">
+                password = #{user.password},
+            </if>
+            <if test="user.email!=null">
+                email = #{user.email},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 
 </mapper>
