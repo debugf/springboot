@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,7 +54,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         return result;
     }
 
-
     public Result login(User user){
         Result result = new Result();
         result.setSuccess(false);
@@ -80,6 +78,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
         return result;
     }
-
 }
 
