@@ -16,5 +16,4 @@ public class SpringbootMybatisplusApplication {
         SpringApplication.run(SpringbootMybatisplusApplication.class, args);
         logger.info("========================启动完毕========================");
     }
-
 }

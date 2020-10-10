@@ -10,6 +10,8 @@ import com.springboot.springbootmybatisplus.Bean.User;
 import com.springboot.springbootmybatisplus.annotation.PassToken;
 import com.springboot.springbootmybatisplus.annotation.UserLoginToken;
 import com.springboot.springbootmybatisplus.mapper.UserMapper;
+import com.springboot.springbootmybatisplus.utils.RedisUtil;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,8 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private RedisUtil redisUtil;
+
     @Autowired
     UserMapper userMapper;
 
@@ -44,7 +51,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
             if (userLoginToken.required()){
                 //执行认证
                 if (token == null) {
-                    throw new RuntimeException("无token，请重新登录");
+                    throw new RuntimeException("无token，请重新登录！");
                 }
                 //获取 token 中的 username
                 String userName;
@@ -53,12 +60,12 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 } catch (JWTDecodeException j) {
                     throw new RuntimeException("401");
                 }
-                User user = userMapper.findUserByName(userName);
-                if(user == null) {
-                    throw new RuntimeException("用户不存在请重新登录");
+                String pwd = redisUtil.get(userName).toString();
+                if(pwd == null) {
+                    throw new RuntimeException("身份认证过期,请重新登录！");
                 }
                 // 验证token
-                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
+                JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(pwd)).build();
                 try {
                     jwtVerifier.verify(token);
                 } catch (JWTVerificationException e){

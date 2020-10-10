@@ -1,5 +1,5 @@
 CREATE TABLE `user` (
-  `id` int(32) primary key not null AUTO_INCREMENT COMMENT '用户id'
+  `id` int(32) primary key not null AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(255) not null COMMENT '用户名',
   `password` varchar(255) not null COMMENT '密码',
   `email` varchar(255) default null COMMENT '邮箱',

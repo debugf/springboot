@@ -6,6 +6,7 @@ import com.springboot.springbootmybatisplus.Bean.User;
 import com.springboot.springbootmybatisplus.mapper.UserMapper;
 import com.springboot.springbootmybatisplus.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.springboot.springbootmybatisplus.utils.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private TokenServiceImpl tokenService;
+
+    @Autowired
+    RedisUtil redisUtil;
 
     public Result regist(User user){
         Result result = new Result();
@@ -65,6 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }else {
                 result.setMsg("登录成功");
                 String token = tokenService.getToken(user);
+                redisUtil.set(user.getUsername(),user.getPassword());
                 result.setSuccess(true);
                 Map returnMap = new HashMap();
                 returnMap.put("id", user1.getId());
