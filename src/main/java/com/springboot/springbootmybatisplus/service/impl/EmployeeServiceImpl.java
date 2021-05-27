@@ -7,8 +7,12 @@ import com.springboot.springbootmybatisplus.Bean.Result;
 import com.springboot.springbootmybatisplus.mapper.EmployeeMapper;
 import com.springboot.springbootmybatisplus.service.IEmployeeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
@@ -24,7 +28,10 @@ public class EmployeeServiceImpl extends ServiceImpl<EmployeeMapper, Employee> i
     @Autowired
     EmployeeMapper employeeMapper;
 
+    private static Map<String, Code> codeMap;
+
     public Result getEmployees(int page, int size){
+        codeMap = new ConcurrentHashMap<>();
         Result result = new Result();
         result.setSuccess(false);
         result.setDetail(null);

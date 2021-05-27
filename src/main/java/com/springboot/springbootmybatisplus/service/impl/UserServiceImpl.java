@@ -7,11 +7,13 @@ import com.springboot.springbootmybatisplus.mapper.UserMapper;
 import com.springboot.springbootmybatisplus.service.IUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.springboot.springbootmybatisplus.utils.RedisUtil;
+import com.sun.org.apache.bcel.internal.classfile.Code;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>
@@ -33,7 +35,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Autowired
     RedisUtil redisUtil;
 
+    private static Map<String, Code> codeMap;
+
     public Result regist(User user){
+        codeMap = new ConcurrentHashMap<>();
         Result result = new Result();
         result.setSuccess(false);
         result.setDetail(null);
